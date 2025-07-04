@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist Harian Produktif</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .checklist {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .checklist label {
+      display: block;
+      margin: 10px 0;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #reset {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #dayCounter {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Checklist Harian Produktif</h1>
+  <div id="dayCounter">Hari ke-1</div>
+  <div class="checklist">
+    <label><input type="checkbox"> Bangun pagi jam 5</label>
+    <label><input type="checkbox"> Bantu orang tua (jam 6-10)</label>
+    <label><input type="checkbox"> Workout / olahraga</label>
+    <label><input type="checkbox"> Belajar coding</label>
+    <label><input type="checkbox"> Perawatan wajah</label>
+    <label><input type="checkbox"> Baca buku 10 menit</label>
+    <label><input type="checkbox"> Trading latihan/demo</label>
+    <label><input type="checkbox"> Tidur sebelum jam 10</label>
+  </div>
+  <button id="reset">Reset Checklist</button>  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const dayCounter = document.getElementById('dayCounter');
+    const resetButton = document.getElementById('reset');
+
+    // Ambil tanggal mulai dari localStorage
+    let startDate = localStorage.getItem('startDate');
+    if (!startDate) {
+      startDate = new Date().toISOString();
+      localStorage.setItem('startDate', startDate);
+    }
+
+    function updateDayCounter() {
+      const now = new Date();
+      const start = new Date(startDate);
+      const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
+      dayCounter.textContent = Hari ke-${diff};
+    }
+
+    updateDayCounter();
+
+    // Load checklist
+    checkboxes.forEach((cb, index) => {
+      const status = localStorage.getItem(checkbox_${index});
+      cb.checked = status === 'true';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(checkbox_${index}, cb.checked);
+      });
+    });
+
+    resetButton.addEventListener('click', () => {
+      checkboxes.forEach((cb, index) => {
+        cb.checked = false;
+        localStorage.setItem(checkbox_${index}, false);
+      });
+    });
+  </script></body>
+</html>
